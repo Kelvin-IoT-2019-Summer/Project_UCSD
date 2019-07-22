@@ -1,77 +1,81 @@
+# Kelvin
+# 2019/07/22
+# setting up the rocket class
+
 GRAVITY = -10
+T = 0.5
+
 
 class Rocket:
+    """This is a rocket.
+    Please don't crash!"""
+
     count = 0
 
-    def __init__(self, new_rocket_name="NO NAME", new_rocket_fuel=100):
-        self.fuel = new_rocket_fuel
-        self.name = new_rocket_name
-        self.position = 100
-        self.velocity = 0
-        self.thrust = 0
-        self.acceleration = 0
+    def __init__(self, new_rocket_name, new_rocket_fuel=100):
+        self.name = name
+
+        self.p = 100 # position
+        self.v = 0   # velocity
+        self.f = new_rocket_fuel # fuel
+        self.a = 0   # acceleration
+        self.t = 0   # thrust
+
+        self.landed = False
+        self.success = False
+
         Rocket.count += 1
 
-
     def update(self):
-        self.fuel = self.fuel - self.thrust
-        self.acceleration = GRAVITY + self.thrust
-        self.position = self.position + self.velocity + 0.5*self.acceleration
-        self.velocity = self.velocity + self.acceleration
-
-    def print_statue(self):
-        print "{0} P: {1} v: {2} : F: {3}".format(self.name, self.position, self.velocity, self.fuel)
+        self.f = self.f - (self.t * T)
+        self.a = GRAVITY + self.t
+        self.p = self.p + (self.v * T) + (0.5 * self.a * T**2)
+        self.v = self.v + (self.a * T)
+        self.p = max(self.p, 0)
+        if self.p == 0:
+            self.landed = True
+			Rocket.count -= 1
+            if abs(self.v) <= 3:
+                self.success = True
 
     def get_thrust(self):
-        if self.fuel > 0:
-            self.thrust = int(raw_input(self.name + " Set thrusters(0-20): "))
-            if self.thrust > 20:
-                self.thrust = 20
-                print self.name + " Thrusters at max(20)!"
-            if self.thrust < 0:
-                self.thrust = 0
-                print self.name + " No thrusters(0)!"
-            if self.thrust > self.fuel:
-                self.thrust = self.fuel
-                print self.name + " Out of fuel! Thrusters at {0}".format(self.thrust)
+        if self.f > 0:
+            self.t = int(raw_input(self.name + " Thrust?: "))
+            if self.t >= 20:
+                self.t = 20
+                print self.name, " maximum thrust! (20)"
+            if self.t < 0:
+                self.t = 0
+                print self.name, " no thrust! (0)"
+            if (self.t * T) > self.f:
+                self.t = self.f / T
+                print self.name, " Out of fuel! "
         else:
-            print(self.name + "No fuel -- rocket is in free-fall!")
-            self.thrust = 0
+            self.t = 0
+            print self.name, "Out of fuel!"
 
-
-o = int(raw_input("How many Rocket? "))
-fleet = [Rocket(raw_input("Input the Rocket's name: "), int(raw_input("Rocket Fuel: "))) for i in range(o)]
-
-while True:
-    for i in fleet:
-        if (i.position > 0):
-            i.get_thrust()
-
-    for i in fleet:
-        if (i.position > 0):
-            i.update()
-            i.print_statue()
-
-    for k in range(len(fleet)):
-        if fleet[k].position <= 0:
-            if fleet[k].velocity > -3:
-                print fleet[k].name + "rocket landed!"
-                if k == len(fleet) - 1:
-                    exit()
+    def print_status(self):
+        print "{0} p: {1} v: {2} f:{3}".format(self.name, self.p, self.v, self.f)
+        if self.landed:
+            if self.success:
+                print "Landing Successful!"
             else:
-                print fleet[k].name + "Rocket crashed! Velocity was {0} m/s".format(i.velocity)
-                if k == len(fleet) - 1:
-                    exit()
+                print "Landing failed!"
 
-# while(first_rocket.print_statue() > 0):
+print Rocket.__doc__
+
+
+
+
+# first_rocket = Rocket("Mark1")
+
+# fleet = [Rocket("Mark 10", 100), Rocket("Mark 11", 150), Rocket("Mark 12", 200)]
+# fleet.append(Rocket("Mark 50"))
+
+# for rocket in fleet:
+#     print rocket.name
+
+# while not first_rocket.landed:
 #     first_rocket.get_thrust()
 #     first_rocket.update()
-#     first_rocket.print_statue()
-
-# class ADC:
-#
-#     def __init__(self, number):
-#         self.file = "/asdfsadf" + number + "sadfasdf"
-#
-#     def read(self, ):
-#         open()
+#     first_rocket.print_status()
