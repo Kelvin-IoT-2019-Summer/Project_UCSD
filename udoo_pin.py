@@ -27,4 +27,3 @@ def p_SO2_AE():
 
 def p_PM25():
 	return 9
-

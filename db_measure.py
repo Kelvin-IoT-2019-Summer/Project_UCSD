@@ -16,7 +16,7 @@ def measure():
 	aon = sqlite3.connect("Aqi.db")
 	a = aon.cursor()
 	
-	"""
+	
 	#productTable
 	try:
 		sql = "DROP TABLE IF EXISTS productTable"
@@ -35,7 +35,7 @@ def measure():
 		a.execute(sql)
 	except:
 		print("AQI Table create error")
-	"""
+	
 
 
 	for i in range(24, 29):

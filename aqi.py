@@ -3,7 +3,7 @@ def no2(data):
 	cnt = 0; aqi = 0
 	for (i, k) in no2_list:
 		if i[0] < data < i[1]:
-			aqi = int((k[1]-k[0]/i[1]-i[0])*(data-i[0])+k[0])
+			aqi = int(((k[1]-k[0])/(i[1]-i[0]))*(data-i[0])+k[0])
 			return (cnt, aqi)
 		cnt += 1
 	return (-1, aqi)
@@ -13,7 +13,7 @@ def o3(data):
 	cnt = 0; aqi = 0
 	for (i, k) in o3_list:
 		if i[0] < data < i[1]:
-			aqi = int((k[1]-k[0]/i[1]-i[0])*(data-i[0])+k[0])
+			aqi = int(((k[1]-k[0])/(i[1]-i[0]))*(data-i[0])+k[0])
 			return (cnt, aqi)
 		cnt += 1
 	return (-1, aqi)
@@ -23,7 +23,7 @@ def co(data):
 	cnt = 0; aqi = 0
 	for (i, k) in co_list:
 		if i[0] < data < i[1]:
-			aqi = int((k[1]-k[0]/i[1]-i[0])*(data-i[0])+k[0])
+			aqi = int(((k[1]-k[0])/(i[1]-i[0]))*(data-i[0])+k[0])
 			return (cnt, aqi)
 		cnt += 1
 	return (-1, aqi)
@@ -33,7 +33,7 @@ def so2(data):
 	cnt = 0; aqi = 0
 	for (i, k) in so2_list:
 		if i[0] < data < i[1]:
-			aqi = int((k[1]-k[0]/i[1]-i[0])*(data-i[0])+k[0])
+			aqi = int(((k[1]-k[0])/(i[1]-i[0]))*(data-i[0])+k[0])
 			return (cnt, aqi)
 		cnt += 1
 	return (-1, aqi)
@@ -43,7 +43,8 @@ def pm25(data):
 	cnt = 0; aqi = 0
 	for (i, k) in pm25_list:
 		if i[0] < data < i[1]:
-			aqi = int((k[1]-k[0]/i[1]-i[0])*(data-i[0])+k[0])
+			aqi = int(((k[1]-k[0])/(i[1]-i[0]))*(data-i[0])+k[0])
 			return (cnt, aqi)
 		cnt += 1
 	return (-1, aqi)
+
