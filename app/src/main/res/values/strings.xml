@@ -1,0 +1,64 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<string name="app_name">Kangaroo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="repassword">Repeat Password</string>
+    <string name="birth">mm/dd/yyyy</string>
+    <string name="whenbirth">When do you birth?</string>
+    <string name="phone">Phone Number</string>
+    <string name="whatphone">What is your phone number?</string>
+    <string name="state">State </string>
+    <string name="whatstate">What are you live? State</string>
+    <string name="city">City </string>
+    <string name="whatcity">What are you live? City</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="login_now">Login Now</string>
+    <string name="Input_password"> Input your password </string>
+    <string name="mismatch"> Password mismatch</string>
+    <string name="create">Register Account</string>
+    <string name="nickname">NickName</string>
+    <string name="don_t_remember_password">Forgotten password?</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="sign_in_with_facebook">Sign in with Facebook</string>
+    <string name="or">or</string>
+    <string name="reset">Send email</string>
+    <string name="signout">Logout</string>
+
+    <string name="check">check</string>
+    <string name="description">if you are pregnant, you need it! \nLet\'s start health care program</string>
+    <string name="update_your_password">Update Your Password</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+
+    <!--  BluetoothChat -->
+    <string name="send">Send</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_not_connected">not connected</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="title_connected_to">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+
+    <!-- Options Menu -->
+    <string name="secure_connect">Connect a device - Secure</string>
+    <string name="insecure_connect">Connect a device - Insecure</string>
+    <string name="discoverable">Make discoverable</string>
+
+
+    <!--Google Maps -->
+    <string name="googlekey">AIzaSyD094rM2KGofKaTKTQWhdnd7YxzUQhpCw4</string>
+
+</resources>
