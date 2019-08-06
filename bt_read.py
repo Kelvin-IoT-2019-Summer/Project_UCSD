@@ -31,8 +31,9 @@ cnt = 0
 try:
     while client_sock != None:
 		try:
-			if cnt//4==1:
-				client_sock.send(db_measure.command("now"))
+			if cnt//5==1:
+				client_sock.send(db_measure.command("Mvalue"))
+				client_sock.send(db_measure.command("aqi"))
 				cnt = 0
 			data = client_sock.recv(1024)
 			if data:
