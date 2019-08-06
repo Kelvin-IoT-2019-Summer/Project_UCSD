@@ -51,7 +51,7 @@ public class SensorListActivity extends AppCompatActivity {
         try {
             //jsonObject.put("type", "SUE-REQ");
             //앞에 프로토콜 명 써주는 게 좋을 듯 (나중에 수정)
-            jsonObject.put("usn", 12/*Sequence.USN*/);
+            jsonObject.put("usn", Sequence.USN);
             //request
             Receive_json receive_json = new Receive_json();
             sensorlist_result_json = receive_json.getResponseOf(SensorListActivity.this, jsonObject, url);
@@ -134,7 +134,7 @@ public class SensorListActivity extends AppCompatActivity {
             SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
             Log.e("EEEE", pref.getString(mac_address,""));
 
-            jsonObject2.put("usn", 12/*수정*/);
+            jsonObject2.put("usn", Sequence.USN);
             jsonObject2.put("ssn", pref.getString(mac_address,""));
 
 

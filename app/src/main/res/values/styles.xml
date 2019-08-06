@@ -10,6 +10,13 @@
         <item name="actionBarTheme">@style/AppTheme.ActionBar.Transparent</item>
     </style>
 
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#B7F2AB39</item>
+        <item name="colorPrimaryDark">#B7F2AB39</item>
+        <item name="colorAccent">#558B2F</item>
+    </style>
+
     <style name="popupTheme" parent="Theme.AppCompat.DayNight.Dialog">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#B7F2AB39</item>

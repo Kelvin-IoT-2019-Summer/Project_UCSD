@@ -1,10 +1,16 @@
+
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 <string name="app_name">Kangaroo</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email_address">Email address</string>
+    <string name="oldpassword">Password</string>
     <string name="password">Password</string>
     <string name="repassword">Repeat Password</string>
+    <string name="orgpassword">Original Password</string>
+    <string name="newpassword">New Password</string>
+    <string name="renewpassword">Repeat New Password</string>
+    <string name="changepassword">Change Password!</string>
     <string name="birth">mm/dd/yyyy</string>
     <string name="whenbirth">When do you birth?</string>
     <string name="phone">Phone Number</string>
@@ -28,7 +34,6 @@
     <string name="or">or</string>
     <string name="reset">Send email</string>
     <string name="signout">Logout</string>
-
     <string name="check">check</string>
     <string name="description">if you are pregnant, you need it! \nLet\'s start health care program</string>
     <string name="update_your_password">Update Your Password</string>
