@@ -1,12 +1,13 @@
 package app.papr.Qualcomm;
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -22,6 +23,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,11 +54,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     private static final int REQUEST_CONNECT_DEVICE_INSECURE = 2;
     private static final int REQUEST_ENABLE_BT = 3;
@@ -72,30 +80,53 @@ public class MainActivity extends AppCompatActivity {
     private TextView title;
     private Button sensor_list;
 
+    //sign_out
+    JSONObject jsonObject2, sign_out_result_json;
+    private String url2 = "http://teama-iot.calit2.net/android/user/sign-out/process";
+
+
+    //Navigator drawer
+    private ListView lvNavList;
+    private FrameLayout flcontainer;
+    private DrawerLayout dlDrawer;
+    private ActionBarDrawerToggle dtToggle;
+
+    public static Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.menu_activity);
         //full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_title);
-        getSupportActionBar().setElevation(0);
-        title = (TextView) getSupportActionBar().getCustomView().findViewById(R.id.mytext);
-        title.setText("Kangaroo");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle(" ");
 
-        sensor_list = (Button) getSupportActionBar().getCustomView().findViewById(R.id.sensor_list);
-        sensor_list.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //수정
-                Intent intent = new Intent(MainActivity.this, GoogleMap.class);
-                startActivity(intent);
-            }
-        });
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+//        sensor_list = (Button) getSupportActionBar().getCustomView().findViewById(R.id.sensor_list);
+//        sensor_list.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //수정
+//                Intent intent = new Intent(MainActivity.this, GoogleMap.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        //polar sensor
         activatePolar();
+
 
 
         //BluetoothChatFragment
@@ -106,9 +137,6 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
      }
-
-
-
 
     //안드로이드 백버튼 막기
     @Override
@@ -188,5 +216,45 @@ public class MainActivity extends AppCompatActivity {
         intentFilter.addAction(MyPolarBleReceiver.ACTION_GATT_DISCONNECTED);
         intentFilter.addAction(MyPolarBleReceiver.ACTION_HR_DATA_AVAILABLE);
         return intentFilter;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
+
+        if (id == R.id.nav_profile) {
+        }
+        else if (id == R.id.nav_sensor) {
+            Intent intent = new Intent(MainActivity.this, SensorListActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_map) {
+            Intent intent = new Intent(MainActivity.this, GoogleMap.class);
+            startActivity(intent);
+        }
+
+        else if (id == R.id.nav_login_logout) {
+            try {
+                jsonObject2 = new JSONObject();
+                //jsonObject.put("type", "SUE-REQ");
+                //앞에 프로토콜 명 써주는 게 좋을 듯 (나중에 수정)
+                jsonObject2.put("usn", Sequence.USN);
+                //request
+                Receive_json receive_json = new Receive_json();
+                sign_out_result_json = receive_json.getResponseOf(MainActivity.this, jsonObject2, url2);
+                //resoponse
+                if (sign_out_result_json!= null) {
+                    if (sign_out_result_json.getInt("result_code")==1) {
+                        this.finish();
+                    }  else {
+                        Toast.makeText(MainActivity.this, "USN Not found.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return true;
     }
 }

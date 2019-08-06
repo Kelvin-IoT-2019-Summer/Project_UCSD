@@ -27,11 +27,12 @@
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Holo.Dialog"/>
         <activity android:name="app.papr.Qualcomm.MainActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme2"/>
         <activity android:name="app.papr.Qualcomm.ForgottenActivity"/>
         <activity android:name="app.papr.Qualcomm.Sign_inActivity"/>
         <activity android:name="app.papr.Qualcomm.Sign_upActivity"/>
         <activity android:name="app.papr.Qualcomm.GoogleMap"/>
+        <activity android:name="app.papr.Qualcomm.UserPasswordChangeActivity"/>
         <activity android:name="app.papr.Qualcomm.SensorListActivity"/>
         <activity android:name="app.papr.Qualcomm.StartActivity">
             <intent-filter>

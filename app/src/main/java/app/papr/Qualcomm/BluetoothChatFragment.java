@@ -27,6 +27,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -45,6 +46,7 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 /**
  * This fragment controls Bluetooth to communicate with other devices.
@@ -69,7 +71,7 @@ public class BluetoothChatFragment extends Fragment {
     private TextView CO;
     private TextView O3;
     private TextView NO2;
-
+    private Toolbar toolbar;
     /**
      * Name of the connected device
      */
@@ -95,8 +97,6 @@ public class BluetoothChatFragment extends Fragment {
      */
     private BluetoothChatService mChatService = null;
     JSONObject jsonObject = new JSONObject();
-    JSONObject jsonObject2, sign_out_result_json;
-    private String url2 = "http://teama-iot.calit2.net/android/user/sign-out/process";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,6 @@ public class BluetoothChatFragment extends Fragment {
             Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             activity.finish();
         }
-
 
     }
 
@@ -258,19 +257,17 @@ public class BluetoothChatFragment extends Fragment {
      * @param resId a string resource ID
      */
     private void setStatus(int resId) {
-        FragmentActivity activity = getActivity();
+        MainActivity activity = (MainActivity)getActivity();
         if (null == activity) {
             return;
         }
-
         final ActionBar actionBar = activity.getActionBar();
-        TextView title = (TextView) ((MainActivity)getActivity()).getSupportActionBar().getCustomView().findViewById(R.id.subtitle);
-        title.setText(resId);
+        TextView dev_status = (TextView)(MainActivity.toolbar).findViewById(R.id.device_status);
+        dev_status.setText(resId);
         if (null == actionBar) {
             return;
         }
-        actionBar.setSubtitle(resId);
-        //MainActivity.device_status.setText(resId);
+
     }
 
     /**
@@ -279,19 +276,19 @@ public class BluetoothChatFragment extends Fragment {
      * @param subTitle status
      */
     private void setStatus(CharSequence subTitle) {
-        FragmentActivity activity = getActivity();
+        MainActivity activity = (MainActivity)getActivity();
         if (null == activity) {
             return;
         }
+
         final ActionBar actionBar = activity.getActionBar();
         Toast.makeText(activity, subTitle, Toast.LENGTH_SHORT).show();        //MainActivity.device_status.setText(subTitle);
-        TextView title = (TextView) ((MainActivity)getActivity()).getSupportActionBar().getCustomView().findViewById(R.id.subtitle);
-        title.setText(subTitle);
-
+        TextView dev_status = (TextView)(MainActivity.toolbar).findViewById(R.id.device_status);
+        dev_status.setText(subTitle);
         if (null == actionBar) {
             return;
         }
-        //actionBar.setSubtitle(subTitle);
+
     }
 
     
@@ -445,30 +442,7 @@ public class BluetoothChatFragment extends Fragment {
                 ensureDiscoverable();
                 return true;
             }
-            case R.id.signout:{
-                FragmentActivity activity = getActivity();
-                jsonObject2 = new JSONObject();
-                try {
-                    //jsonObject.put("type", "SUE-REQ");
-                    //앞에 프로토콜 명 써주는 게 좋을 듯 (나중에 수정)
-                    jsonObject2.put("usn", Sequence.USN);
-                    //request
-                    Receive_json receive_json = new Receive_json();
-                    sign_out_result_json = receive_json.getResponseOf(activity, jsonObject2, url2);
-                    //resoponse
-                    if (sign_out_result_json!= null) {
-                        if (sign_out_result_json.getInt("result_code")==1) {
-                            activity.finish();
-                        }  else {
-                            Toast.makeText(activity, "USN Not found.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                return true;
-            }
         }
         return false;
     }

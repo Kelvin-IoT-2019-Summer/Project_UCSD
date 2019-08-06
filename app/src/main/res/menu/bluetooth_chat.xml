@@ -32,9 +32,4 @@
         android:title="@string/discoverable"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/signout"
-        android:title="@string/signout"
-        app:showAsAction="never" />
-
 </menu>
