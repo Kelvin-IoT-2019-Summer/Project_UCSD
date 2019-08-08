@@ -99,7 +99,7 @@ def SO2(WE, AE, T):
 	num = T//10
 	if num in SO2_dict:
 		t = SO2_dict.get(num)
-	ppb = ((WE-333) - t*(AE-274)) / 0.288
+	ppb = ((WE-280) - t*(AE-306)) / 0.296
 	return ppb
 
 
@@ -108,7 +108,7 @@ def O3(WE, AE, T):
 	num = T//10
 	if num in O3_dict:
 		t = O3_dict.get(num)
-	ppb = ((WE-418) - t*(AE-404)) / 0.393
+	ppb = ((WE-418) - t*(AE-404)) / 393
 	return ppb
 
 
@@ -117,7 +117,7 @@ def CO(WE, AE, T):
 	num = T//10
 	if num in CO_dict:
 		t = CO_dict.get(num)
-	ppb = ((WE-345) - t*(AE-315)) / 0.292
+	ppb = ((WE-311) - t*(AE-296)) / 0.292
 	return ppb
 
 
@@ -126,16 +126,16 @@ def NO2(WE, AE, T):
 	num = T//10
 	if num in NO2_dict:
 		t = NO2_dict.get(num)
-	ppb = ((WE-287) - t*(AE-292)) / 0.258
+	ppb = ((WE-215) - t*(AE-246)) / 0.212
 	return ppb
 
 
 def temperature(V):
-	T = (V - 790) / 10 + 25
+	T = (V - 900) / 10 + 25
 	return T
 
 
 def PM25(V):
-	hppcf = 50 + (2433*V) + (1386*V**2)
+	hppcf = 50 + (0.2433*V) + (0.1386*V**2)
 	pm = 0.518 + 0.00274*hppcf
 	return pm

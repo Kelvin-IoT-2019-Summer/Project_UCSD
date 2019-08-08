@@ -90,31 +90,31 @@ def measure():
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
-	c.execute("SELECT avg(NO2) FROM productTable ORDER BY time DESC LIMIT 10")
+	c.execute("SELECT avg(NO2) FROM productTable ORDER BY time DESC LIMIT 3600")
 	no2 = c.fetchall()
 	no2 = int(no2[0][0])
 	no2 = aqi.no2(no2)
 	no2c = aqi_dict[no2[0]]
 
-	c.execute("SELECT avg(O3) FROM productTable ORDER BY time DESC LIMIT 10")
+	c.execute("SELECT avg(O3) FROM productTable ORDER BY time DESC LIMIT 3600")
 	o3 = c.fetchall()
 	o3 = round(float(o3[0][0]),3)
 	o3 = aqi.o3(o3)
 	o3c = aqi_dict[o3[0]]
 
-	c.execute("SELECT avg(CO) FROM productTable ORDER BY time DESC LIMIT 10")
+	c.execute("SELECT avg(CO) FROM productTable ORDER BY time DESC LIMIT 3600")
 	co = c.fetchall()
 	co = round(float(co[0][0]),1)
 	co = aqi.co(co)
 	coc = aqi_dict[co[0]]
 
-	c.execute("SELECT avg(SO2) FROM productTable ORDER BY time DESC LIMIT 10")
+	c.execute("SELECT avg(SO2) FROM productTable ORDER BY time DESC LIMIT 3600")
 	so2 = c.fetchall()
 	so2 = int(so2[0][0])
 	so2 = aqi.so2(so2)
 	so2c = aqi_dict[so2[0]]
 
-	c.execute("SELECT avg(PM25) FROM productTable ORDER BY time DESC LIMIT 10")
+	c.execute("SELECT avg(PM25) FROM productTable ORDER BY time DESC LIMIT 3600")
 	pm25 = c.fetchall()
 	pm25 = round(float(pm25[0][0]),1)
 	pm25 = aqi.pm25(pm25)
@@ -132,52 +132,73 @@ def measure():
 
 
 
+def delete():
+	con = sqlite3.connect("Measure.db")
+	c = con.cursor()
+	aon = sqlite3.connect("Aqi.db")
+	a = aon.cursor()
+	
+	timestamp = str(datetime.now())[:-7].replace(str(datetime.now())[11:13], str(int(str(datetime.now())[11:13])-1))
+	ccc = "DELETE from productTable ORDER BY time DESC LIMIT 1 OFFSET 3600"
+	aaa = "DELETE from aqiTable ORDER BY time DESC LIMIT 1 OFFSET 3600"
+	c.execute(ccc)
+	a.execute(aaa)
+	con.commit()
+	aon.commit()
+	con.close()
+	aon.close()
+
 
 def command(data):
 
 	if data == "Mvalue":
 		con = sqlite3.connect("Measure.db")
 		c = con.cursor()
-		c.execute("SELECT * FROM productTable ORDER BY time DESC LIMIT 4")
-
-		rows = c.fetchall()
+		c.execute("SELECT * FROM productTable ORDER BY time DESC LIMIT 3")
+		aon = sqlite3.connect("Aqi.db")
+		a = aon.cursor()
+		a.execute("SELECT * FROM aqiTable ORDER BY time DESC LIMIT 3")
 		JSON_array = []
+		
+		rows = (c.fetchall(), a.fetchall())
+		rows_zip = map(list, zip(*rows))
 
-		for r in rows:
+		for r in rows_zip:
 			JSON_string = {
-			"temperature": r[1],
-			"NO2": r[2],
-			"O3": r[3],
-			"CO": r[4],
-			"SO2": r[5],
-			"PM2.5": r[6],
-			"datetime": r[0]
+			"temperature": r[0][1],
+			"NO2": r[0][2], "NO2_AQI": r[1][2], "NO2_AQI_C": r[1][1],
+			"O3": r[0][3], "O3_AQI": r[1][4], "O3_AQI_C": r[1][3],
+			"CO": r[0][4], "CO_AQI": r[1][6], "CO_AQI_C": r[1][5],
+			"SO2": r[0][5],"SO2_AQI": r[1][8], "SO2_AQI_C": r[1][7],
+			"PM2.5": r[0][6],"PM2.5_AQI": r[1][10], "PM2.5_AQI_C": r[1][9],
+			"datetime": r[0][0]
 			}
 			JSON_array.append(JSON_string)
 
 		y = json.dumps(JSON_array)
 		con.close()
-		return y
-
-	if data == "aqi":
-		aon = sqlite3.connect("Aqi.db")
-		a = aon.cursor()
-		a.execute("SELECT * FROM aqiTable ORDER BY time DESC LIMIT 4")
-		
-		rows = a.fetchall()
-		JSON_array = []
-		
-		for i in rows:
-				JSON_string = {
-				"NO2_AQI": i[2], "NO2_AQI_C": i[1],
-				"O3_AQI": i[4], "O3_AQI_C": i[3],
-				"CO_AQI": i[6], "CO_AQI_C": i[5],
-				"SO2_AQI": i[8], "SO2_AQI_C": i[7],
-				"PM2.5_AQI": i[10], "PM2.5_AQI_C": i[9]
-				}
-				JSON_array.append(JSON_string)
-
-		y = json.dumps(JSON_array)
 		aon.close()
 		return y
+
+	# if data == "aqi":
+		# aon = sqlite3.connect("Aqi.db")
+		# a = aon.cursor()
+		# a.execute("SELECT * FROM aqiTable ORDER BY time DESC LIMIT 4")
+		
+		# rows = a.fetchall()
+		# JSON_array = []
+		
+		# for i in rows:
+				# JSON_string = {
+				# "NO2_AQI": i[2], "NO2_AQI_C": i[1],
+				# "O3_AQI": i[4], "O3_AQI_C": i[3],
+				# "CO_AQI": i[6], "CO_AQI_C": i[5],
+				# "SO2_AQI": i[8], "SO2_AQI_C": i[7],
+				# "PM2.5_AQI": i[10], "PM2.5_AQI_C": i[9]
+				# }
+				# JSON_array.append(JSON_string)
+
+		# y = json.dumps(JSON_array)
+		# aon.close()
+		# return y
 
