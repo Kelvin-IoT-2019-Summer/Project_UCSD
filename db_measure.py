@@ -9,7 +9,7 @@ import aqi
 
 
 def measure():
-	aqi_dict = {-1:"#FFFFFF", 0:"#00FF00", 1:"#FFFF00", 2:"#FFA500", 3:"#FF0000", 4:"#800080", 5:"#800000", 6:"#800000"}
+	aqi_dict = {-1:"#FFFFFF", 0:"#1CC88A", 1:"#FFD700", 2:"#FFA500", 3:"#FF0000", 4:"#800080", 5:"#800000", 6:"#800000"}
 	con = sqlite3.connect("Measure.db")
 	c = con.cursor()
 	

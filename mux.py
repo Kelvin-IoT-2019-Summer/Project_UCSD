@@ -117,7 +117,7 @@ def CO(WE, AE, T):
 	num = T//10
 	if num in CO_dict:
 		t = CO_dict.get(num)
-	ppb = ((WE-311) - t*(AE-296)) / 0.292
+	ppb = ((WE-311) - t*(AE-276)) / 292
 	return ppb
 
 
@@ -131,7 +131,7 @@ def NO2(WE, AE, T):
 
 
 def temperature(V):
-	T = (V - 900) / 10 + 25
+	T = (V - 830) / 10 + 25
 	return T
 
 
