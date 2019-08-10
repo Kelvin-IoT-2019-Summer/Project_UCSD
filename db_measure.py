@@ -154,10 +154,10 @@ def command(data):
 	if data == "Mvalue":
 		con = sqlite3.connect("Measure.db")
 		c = con.cursor()
-		c.execute("SELECT * FROM productTable ORDER BY time DESC LIMIT 3")
+		c.execute("SELECT * FROM productTable ORDER BY time DESC LIMIT 2")
 		aon = sqlite3.connect("Aqi.db")
 		a = aon.cursor()
-		a.execute("SELECT * FROM aqiTable ORDER BY time DESC LIMIT 3")
+		a.execute("SELECT * FROM aqiTable ORDER BY time DESC LIMIT 2")
 		JSON_array = []
 		
 		rows = (c.fetchall(), a.fetchall())
