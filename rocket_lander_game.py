@@ -1,4 +1,4 @@
-# Kelvin
+# Kelvin Jang
 
 GRAVITY = -10
 
