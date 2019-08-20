@@ -1,4 +1,4 @@
-# Kelvin Jang
+# Kelvin Jang KyungSu
 
 GRAVITY = -10
 
