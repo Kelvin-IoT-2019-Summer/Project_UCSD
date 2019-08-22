@@ -1,5 +1,5 @@
 # Kelvin Jang KyungSu
-# Rocket
+# Rocket Lander
 
 GRAVITY = -10
 
