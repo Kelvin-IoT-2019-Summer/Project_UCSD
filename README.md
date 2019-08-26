@@ -1,5 +1,5 @@
 # Measuring AQI
-This is a **AQI project** for measuring that includes NO2, O3, CO, SO2 and PM2.5 and for communicating with App through Bluetooth.
+This is a **AQI project** for measuring that includes NO2, O3, CO, SO2 and PM2.5 and for communicating with App through **Bluetooth**.
 
 Base on https://github.com/pybluez/pybluez
 
