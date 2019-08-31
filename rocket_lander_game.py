@@ -1,5 +1,5 @@
 # Kelvin Jang KyungSu
-# Rocket Lander Game~
+# Rocket Lander Game
 
 GRAVITY = -10
 
