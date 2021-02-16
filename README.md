@@ -1,58 +1,77 @@
-# Slim 3 MVC Skeleton
+## 👍2019 UCSD QI Summer IoT Camp Team A - Web Part
 
-This is a simple skeleton project for Slim 3 that includes Doctrine, Twig, Flash messages and Monolog.
+## 🦘Project Name : Kangaroo
 
-Base on https://github.com/akrabat/slim3-skeleton
+#### 📒Information
 
-## Prepare
+* 웹 개발자 : 조명근 
+* 개발기간 : 총 5주
+* 사용 기술 스택
+  * Back-end
+    * `PHP Slim Framework`
+    * `Ubuntu`
+    * `Mysql`
+    * `Apache Tomcat`
+  * Front-end
+    * `HTML, CSS,JavaScript, JQuery `
+    * `Google Map API, Google Chart, AM Chart, Apex Chart`
+* [다녀온 후기](https://ddingg.tistory.com/24?category=845598)
 
-1. Create your project:
+---
 
-       `$ composer create-project -n -s dev vhchung/slim3-skeleton-mvc your-app`
+### 📕 프로젝트 개요
 
-1. Execute `your-app\sql\blog.sql` to create sample database (MySQL)
-2. Change database connection settings at `entities_generator.php` and `app/settings.php`
-3. Generate models (Doctrine entities):
+- 임산부를 위한 공기질, 심박수 측정 및 실시간 모니터링
+- 프로젝트 진행 기본 조건
+  - Udoo Board를 사용할 것.
+  - Air Quality Sensor를 사용할 것.
+  - 심박 측정 Sensor를 사용할 것.
+  - Android, Web 두가지 플랫폼을 구성할 것.
+  - PHP Slim Framework, MySQL을 사용할 것.
+  - 구현 기능
+    - 회원가입(이메일 인증 포함), 로그인, 회원 정보 수정, 비밀번호 & 이메일 찾기
+    - Android GPS를 이용한 위치추적
+    - AirQuality Sensor를 통해 받아온 데이터 실시간 모니터링 및 측정 데이터
+      - 데이터가 측정된 장소를 Google Map에 Display
+    - 심박 센서를 통해 받아온 데이터 실시간 & 기록된 데이터 Display
 
-```
+---
 
-$ cd your-app
-$ php entities_generator.php
+### 📕 프로젝트 설계
 
-```
+- [Reference Model](https://github.com/dding-g/Project_UCSD/blob/qi_jmg/%EC%84%A4%EA%B3%84/ReferenceModel/reference%20model.pngg)
+- [SystemArchitecture](https://github.com/dding-g/Project_UCSD/blob/qi_jmg/%EC%84%A4%EA%B3%84/SystemArchitecture/System%20Architecture%20-%20group%20A.png)
+- [DB Schema](https://github.com/dding-g/Project_UCSD/blob/qi_jmg/%EC%84%A4%EA%B3%84/DB_Schema/TeamA_Schema_kangaroo.png)
+- [Procedure](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure)
+  * [User Management](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/UserManagement)
+  * [Sensor](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/Sensor)
+  * [Data Monitoring](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/DataMornitoring)
+  * [Data Management](https://github.com/dding-g/Project_UCSD/tree/qi_jmg/%EC%84%A4%EA%B3%84/Procedure/DataManagement)
 
- Add namespace for each model: `namespace App\Model;`
+---
 
- Notice: Delete all models before re-generate to update models.
+### 🥕 결과 화면
 
-### Run it:
+- 회원가입 페이지
 
-1. `$ cd your-app`
-2. `$ php -S 0.0.0.0:8888 -t public/`
-3. Browse to http://localhost:8888
+![image](https://user-images.githubusercontent.com/29707967/81568371-a1809900-93d8-11ea-9766-2e63a20c8aeb.png)
 
-### Notice
+- 홈페이지 (Google Map API)
 
-Set `logs` and `cache` folder permission to writable when deploy to production environment
+  - 대기 오염도에 따라 [AQI 지수에 따른 색상]([https://ko.wikipedia.org/wiki/%EB%8C%80%EA%B8%B0%EC%A7%88_%EC%A7%80%EC%88%98](https://ko.wikipedia.org/wiki/대기질_지수)) 으로 Google Map Pin 및 하단부의 대기 오염도를 보여주는 박스 색상을 변하게 하는 식으로 구현. 실시간으로 데이터가 새로고침 되어 볼 수 있다.
 
-## Key directories
+  ![image](https://user-images.githubusercontent.com/29707967/81568558-e60c3480-93d8-11ea-820a-ef0760186691.png)
 
-* `app`: Application code
-* `app/src`: All class files within the `App` namespace
-* `app/templates`: Twig template files
-* `cache/twig`: Twig's Autocreated cache files
-* `log`: Log files
-* `public`: Webserver root
-* `vendor`: Composer dependencies
-* `sql`: sql dump file for sample database
+- 실시간 심박수와 측정 위치 Display (Google Map API, AM Chart)
 
-## Key files
+![image](https://user-images.githubusercontent.com/29707967/81568717-24095880-93d9-11ea-8000-c8606f10c35e.png)
 
-* `public/index.php`: Entry point to application
-* `app/settings.php`: Configuration
-* `app/dependencies.php`: Services for Pimple
-* `app/middleware.php`: Application middleware
-* `app/routes.php`: All application routes are here
-* `app/src/controllers/HomeController.php`: Controller class for the home page
-* `app/src/models/Post.php`: Entity class for post table
-* `app/templates/home.twig`: Twig template file for the home page
+- 심박수를 측정한 기록 Display (Apex Chart)
+
+![image](https://user-images.githubusercontent.com/29707967/81568809-413e2700-93d9-11ea-9c3b-4d0bc3d2ee91.png)
+
+- 대기 오염도를 측정 및 기록 Display (Google Map API, Google Chart)
+
+![image](https://user-images.githubusercontent.com/29707967/81569690-93337c80-93da-11ea-82b0-b5e7f6a1e4c4.png)
+
+
